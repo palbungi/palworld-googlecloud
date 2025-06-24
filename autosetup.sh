@@ -1,6 +1,6 @@
 sudo timedatectl set-timezone Asia/Seoul
 
-mkdir /home/serverfile
+sudo mkdir /home/serverfile
 
 sudo chown -R 1001:1002 /home/serverfile
 
