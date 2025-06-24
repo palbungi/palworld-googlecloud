@@ -38,23 +38,8 @@ wget -P /home/serverfile/palworld/Pal/Saved/Config/LinuxServer https://raw.githu
 
 # Portainer 설치 및 실행(웹에서 서버관리)
 mkdir /home/serverfile/portainer
-cat <<EOF > home/serverfile/portainer/docker-compose.yml
----
-services:
-  portainer:
-    image: portainer/portainer-ce:alpine
-    container_name: portainer
-    restart: always
-    ports:
-      - 8888:9000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer_data:/data
-
-volumes:
-  portainer_data:
-
+wget -P /home/serverfile/Portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
 sudo docker-compose -f /home/serverfile/portainer/docker-compose.yml up -d
 
 # 서버 시작
-sudo docker-compose up -d
+sudo docker-compose -f /home/serverfile/docker-compose.yml up -d
