@@ -26,9 +26,3 @@ sudo chmod +x /home/serverfile
 (sudo crontab -l 2>/dev/null; echo "50 15 * * * /home/serverfile/regular_maintenance.sh") | crontab -
 (sudo crontab -l 2>/dev/null; echo "50 19 * * * /home/serverfile/regular_maintenance.sh") | crontab -
 (sudo crontab -l 2>/dev/null; echo "50 23 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-
-echo "Installing Serverfile... Please wait 2 minute"
-
-sudo docker-compose up -d && sleep 120
-
-echo "Complete! Now you can join your server"
