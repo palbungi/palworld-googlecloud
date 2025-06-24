@@ -18,11 +18,13 @@ wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/
 
 wget https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/regular_maintenance.sh
 
-sudo chmod +x /home/serverfile
+sudo chmod +x /home/serverfile/*
 
-(sudo crontab -l 2>/dev/null; echo "50 03 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(sudo crontab -l 2>/dev/null; echo "50 07 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(sudo crontab -l 2>/dev/null; echo "50 11 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(sudo crontab -l 2>/dev/null; echo "50 15 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(sudo crontab -l 2>/dev/null; echo "50 19 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(sudo crontab -l 2>/dev/null; echo "50 23 * * * /home/serverfile/regular_maintenance.sh") | crontab -
+(sudo crontab -l 2>/dev/null; echo "50 03 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 07 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 11 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 15 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 19 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 23 * * * /home/serverfile/regular_maintenance.sh") | sudo crontab -
+
+sudo docker-compose up -d
