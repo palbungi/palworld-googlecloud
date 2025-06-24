@@ -5,6 +5,7 @@
 https://console.cloud.google.com/compute/instances
 
 3. SSH 연결 클릭 후 아래 명령어 복사&붙여넣기 엔터
+
 ```wget -O pp https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/autosetup.sh && bash pp```
 
 4. 구글 클라우드 VPC네트워크 → 방화벽 → 방화벽 규칙 만들기
