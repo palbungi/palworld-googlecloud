@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-HOST='mygoogleid'
+HOST='serverfile'
 YAML_FILE="/home/$HOST/docker-compose.yml"
 CONTAINER_NAME="palworld"
 
