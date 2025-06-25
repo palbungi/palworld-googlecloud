@@ -1,18 +1,10 @@
 # 한국시간 설정
 sudo timedatectl set-timezone Asia/Seoul
 
-# 서버 디렉토리 생성 및 권한부여
-sudo mkdir /home/serverfile
-sudo chown -R 1001:1002 /home/serverfile
-sudo chmod +x /home/serverfile
-
-# 서버 디렉토리 이동
-cd /home/serverfile
-
 # 도커&도커컴포즈 설치
 sudo groupadd docker
-sudo usermod -aG docker $USER
-sudo apt update && sudo apt -y upgrade && sudo apt install -y nano && sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && yes | sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo usermod -aG docker $(whoami)
+sudo apt update && sudo apt -y upgrade && sudo apt install -y nano && sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.37.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
@@ -21,27 +13,25 @@ wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/
 wget https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/regular_maintenance.sh
 
 # 서버 재시작 스크립트에 실행 권한 추가
-chmod +x /home/serverfile/regular_maintenance.sh
+chmod +x /home/$(whoami)/regular_maintenance.sh
 
 # 서버 재시작 예약(10분전 알림 후 재시작 하므로 3:50, 7:50, 11:50, 15:50, 19:50, 23:50에 각각 등록)
-(crontab -l 2>/dev/null; echo "50 03 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 07 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 11 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 15 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 19 * * * /home/serverfile/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 23 * * * /home/serverfile/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 03 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 07 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 11 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 15 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 19 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(crontab -l 2>/dev/null; echo "50 23 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
 
 # 서버 디렉토리 생성 및 설정파일 다운로드(Engine.ini 최적화, GameUserSettings.ini 서버저장 디렉토리 지정)
-mkdir -p /home/serverfile/palworld/Pal/Saved/Config/LinuxServer
-wget -P /home/serverfile/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/Engine.ini
-wget -P /home/serverfile/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/GameUserSettings.ini
+mkdir -p /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer
+wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/Engine.ini
+wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/GameUserSettings.ini
 
 # Portainer 설치 및 실행(웹에서 서버관리)
-mkdir /home/serverfile/portainer
-wget -P /home/serverfile/portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
-sudo docker-compose -f /home/serverfile/portainer/docker-compose.yml up -d
+mkdir /home/$(whoami)/portainer
+wget -P /home/$(whoami)/portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
+docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 서버 시작
-sudo docker-compose -f /home/serverfile/docker-compose.yml up -d
-
-cd /home/serverfile
+docker-compose -f /home/$(whoami)/docker-compose.yml up -d
