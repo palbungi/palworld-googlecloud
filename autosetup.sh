@@ -35,3 +35,6 @@ docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 서버 시작
 docker-compose -f /home/$(whoami)/docker-compose.yml up -d
+
+# 설치파일 삭제
+rm pb
