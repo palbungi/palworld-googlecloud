@@ -34,7 +34,10 @@ wget -P /home/$(whoami)/portainer https://github.com/palbungi/palworld-googleclo
 docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 서버 시작
-docker-compose -f /home/$(whoami)/docker-compose.yml up -d
+docker-compose -f /home/$(whoami)/docker-compose.yml up -d && sleep 120
+
+# 서버 종료
+docker-compose -f /home/$(whoami)/docker-compose.yml down
 
 # 설치파일 삭제
 rm pb
