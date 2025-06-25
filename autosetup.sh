@@ -7,6 +7,7 @@ sudo usermod -aG docker $(whoami)
 sudo apt update && sudo apt -y upgrade && sudo apt install -y nano && sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && yes | sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.37.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+sudo chmod 666 /var/run/docker.sock
 
 # 팰월드 도커 및 서버 재시작 스크립트 다운로드
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/docker-compose.yml
@@ -31,13 +32,13 @@ wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.github
 # Portainer 설치 및 실행(웹에서 서버관리)
 mkdir /home/$(whoami)/portainer
 wget -P /home/$(whoami)/portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
-sudo docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
+docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 서버 시작
-sudo docker-compose -f /home/$(whoami)/docker-compose.yml up -d && sleep 120
+docker-compose -f /home/$(whoami)/docker-compose.yml up -d && sleep 120
 
 # 서버 종료
-sudo docker-compose -f /home/$(whoami)/docker-compose.yml down
+docker-compose -f /home/$(whoami)/docker-compose.yml down
 
 # 설치파일 삭제
 rm pb
