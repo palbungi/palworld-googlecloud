@@ -31,7 +31,7 @@ mkdir -p /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer
 wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/Engine.ini
 wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/GameUserSettings.ini
 
-# 차후 서버이동을 위해 서버저장 폴더 미리 생성(nano 화면에서 새 콘솔창으로 서버데이터 업로드)
+# 차후 서버이동을 위해 서버저장 디렉토리 미리 생성(nano 화면에서 새 콘솔창으로 서버데이터 업로드)
 mkdir -p /home/$(whoami)/palworld/Pal/Saved/SaveGames/0/0123456789ABCDEF0123456789ABCDEF
 
 # Portainer 설치 및 실행(웹에서 서버관리)
