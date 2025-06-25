@@ -21,8 +21,8 @@ services:
       - PUBLIC_PORT=8211
       - SERVER_NAME=서버이름
       - SERVER_DESCRIPTION=서버설명
-      - SERVER_PASSWORD=
-      - ADMIN_PASSWORD=
+      - SERVER_PASSWORD=worldofpals
+      - ADMIN_PASSWORD=adminPasswordHere
       - UPDATE_ON_BOOT=true
       - RCON_ENABLED=true
       - RCON_PORT=25575
