@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-YAML_FILE="/home/$(whoami)/sudo docker-compose.yml"
+YAML_FILE="/home/$(whoami)/docker-compose.yml"
 CONTAINER_NAME="palworld"
 
 # 10분
