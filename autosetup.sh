@@ -43,3 +43,5 @@ sudo docker-compose -f /home/serverfile/portainer/docker-compose.yml up -d
 
 # 서버 시작
 sudo docker-compose -f /home/serverfile/docker-compose.yml up -d
+
+cd /home/serverfile
