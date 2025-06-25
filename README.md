@@ -8,7 +8,7 @@ https://console.cloud.google.com/compute/instances
 
 ```wget -O pb https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/autosetup.sh && bash pb```
 
-4. nano에서 서버배율 및 서버설정 완료후 컨트롤+x 누른 후 y누르고 엔터
+4. nano에서 서버이름, 패스워드, 서버배율 및 서버설정 완료후 컨트롤+x 누른 후 y누르고 엔터
 
 5.docker-compose up -d 입력 후 엔터
 
