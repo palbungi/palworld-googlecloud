@@ -6,8 +6,8 @@ services:
     stop_grace_period: 30s  # Set to however long you are willing to wait for the container to gracefully stop
     ports:
       - 8211:8211/udp
-      - 27015:27015/udp
-      - 8212:8212/tcp
+      - 27015:27015/udp  # Required if you want your server to show up in the community servers tab
+      - 8212:8212/tcp  # Port for REST API if REST_API_ENABLED: true
       - 25575:25575
     environment:
       - TZ=Asia/Seoul
@@ -16,6 +16,13 @@ services:
       - PUID=1001
       - PGID=1002
       - MULTITHREADING=true
+      - COMMUNITY=false
+      - PUBLIC_IP=
+      - PUBLIC_PORT=8211
+      - SERVER_NAME=서버이름
+      - SERVER_DESCRIPTION=서버설명
+      - SERVER_PASSWORD=
+      - ADMIN_PASSWORD=
       - UPDATE_ON_BOOT=true
       - RCON_ENABLED=true
       - RCON_PORT=25575
@@ -35,7 +42,7 @@ services:
       - AUTO_PAUSE_TIMEOUT_EST=180
       - AUTO_PAUSE_LOG=true
       - AUTO_PAUSE_DEBUG=false
-      - ENABLE_PLAYER_LOGGING=true
+      - ENABLE_PLAYER_LOGGING=false
       - PLAYER_LOGGING_POLL_PERIOD=5
     volumes:
       - ./palworld:/palworld/
