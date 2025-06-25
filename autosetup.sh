@@ -11,18 +11,20 @@ sudo chmod 666 /var/run/docker.sock
 
 # 팰월드 도커 및 서버 재시작 스크립트 다운로드
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/docker-compose.yml
+wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/config.env
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/regular_maintenance.sh
+
 
 # 서버 재시작 스크립트에 실행 권한 추가
 chmod +x /home/$(whoami)/regular_maintenance.sh
 
 # 서버 재시작 예약(10분전 알림 후 재시작 하므로 3:50, 7:50, 11:50, 15:50, 19:50, 23:50에 각각 등록)
-(crontab -l 2>/dev/null; echo "50 03 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 07 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 11 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 15 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 19 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
-(crontab -l 2>/dev/null; echo "50 23 * * * /home/$(whoami)/regular_maintenance.sh") | crontab -
+(sudo crontab -l 2>/dev/null; echo "50 03 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 07 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 11 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 15 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 19 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "50 23 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
 
 # 서버 디렉토리 생성 및 설정파일 다운로드(Engine.ini 최적화, GameUserSettings.ini 서버저장 디렉토리 지정)
 mkdir -p /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer
@@ -34,11 +36,7 @@ mkdir /home/$(whoami)/portainer
 wget -P /home/$(whoami)/portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
 docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
-# 서버 시작
-docker-compose up -d && sleep 120
-
-# 서버 종료
-docker-compose down
-
 # 설치파일 삭제
 rm pb
+
+nano config.env
