@@ -43,4 +43,4 @@ rm pb
 nano config.env
 
 # 팰월드 서버 시작
-docker-compose up -d
+docker-compose -f /home/$(whoami)/docker-compose.yml up -d
