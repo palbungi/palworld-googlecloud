@@ -10,7 +10,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # 팰월드 도커 및 서버 재시작 스크립트 다운로드
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/docker-compose.yml
-wget https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/regular_maintenance.sh
+wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/regular_maintenance.sh
 
 # 서버 재시작 스크립트에 실행 권한 추가
 chmod +x /home/$(whoami)/regular_maintenance.sh
