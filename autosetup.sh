@@ -31,13 +31,13 @@ wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.github
 # Portainer 설치 및 실행(웹에서 서버관리)
 mkdir /home/$(whoami)/portainer
 wget -P /home/$(whoami)/portainer https://github.com/palbungi/palworld-googlecloud/raw/refs/heads/main/portainer/docker-compose.yml
-docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
+sudo docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 서버 시작
-docker-compose -f /home/$(whoami)/docker-compose.yml up -d && sleep 120
+sudo docker-compose -f /home/$(whoami)/docker-compose.yml up -d && sleep 120
 
 # 서버 종료
-docker-compose -f /home/$(whoami)/docker-compose.yml down
+sudo docker-compose -f /home/$(whoami)/docker-compose.yml down
 
 # 설치파일 삭제
 rm pb
