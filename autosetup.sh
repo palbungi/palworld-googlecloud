@@ -31,8 +31,14 @@ mkdir -p /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer
 wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/Engine.ini
 wget -P /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/GameUserSettings.ini
 
-# 차후 서버이동을 위해 서버저장 디렉토리 미리 생성(nano 화면에서 새 콘솔창으로 서버데이터 업로드)
+# 차후 서버이동을 위해 서버저장 폴더 미리 생성(nano 화면에서 새 콘솔창으로 서버데이터 업로드)
 mkdir -p /home/$(whoami)/palworld/Pal/Saved/SaveGames/0/0123456789ABCDEF0123456789ABCDEF
+
+# 서버설정 수정
+nano config.env
+
+# 팰월드 서버 시작
+docker-compose -f /home/$(whoami)/docker-compose.yml up -d
 
 # Portainer 설치 및 실행(웹에서 서버관리)
 mkdir /home/$(whoami)/portainer
@@ -41,9 +47,3 @@ docker-compose -f /home/$(whoami)/portainer/docker-compose.yml up -d
 
 # 설치파일 삭제
 rm pb
-
-# 서버설정 수정
-nano config.env
-
-# 팰월드 서버 시작
-docker-compose -f /home/$(whoami)/docker-compose.yml up -d
