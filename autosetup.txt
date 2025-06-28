@@ -9,13 +9,13 @@ sudo curl -L "https://github.com/docker/compose/releases/download/v2.37.1/docker
 sudo chmod +x /usr/local/bin/docker-compose
 sudo chmod 666 /var/run/docker.sock
 
-# 팰월드 도커 및 서버 재시작 스크립트 다운로드
+# 팰월드 도커 다운로드
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/docker-compose.yml
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/config.env
+
+
+# 서버 재시작 스크립트 다운로드, 경로설정, 실행 권한 추가
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/regular_maintenance.sh
-
-
-# 서버 재시작 스크립트에 경로 및 실행 권한 추가
 sed -i 's/docker-compose.yml//home/$(whoami)/docker-compose.yml/g' regular_maintenance.sh
 chmod +x /home/$(whoami)/regular_maintenance.sh
 
