@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 CRON_FILE="/tmp/mycron"
 SCRIPT_PATH="/home/$(whoami)/regular_maintenance.sh"
@@ -99,6 +100,8 @@ done
 
 # 크론 등록
 crontab "$CRON_FILE"
-rm "$CRON_FILE"
+rm cron.sh
+sudo systemctl start cron
+sudo systemctl enable cron
 
 echo "팰월드 재시작 스크립트가 성공적으로 등록되었습니다."
