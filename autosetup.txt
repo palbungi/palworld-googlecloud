@@ -13,20 +13,10 @@ sudo chmod 666 /var/run/docker.sock
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/docker-compose.yml
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/config.env
 
-
 # 서버 재시작 스크립트 다운로드, 경로설정, 실행 권한 추가
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/regular_maintenance.sh
 sed -i "s|docker-compose.yml|/home/$(whoami)/docker-compose.yml|g" regular_maintenance.sh
 chmod +x /home/$(whoami)/regular_maintenance.sh
-
-# 서버 재시작 예약(10분전 알림 후 재시작 하므로 3:50, 7:50, 11:50, 15:50, 19:50, 23:50에 각각 등록)
-# config.env 안고치고 PalWorldSetting.ini 고치는 사람들이 많아서 크론탭 주석처리함
-# (sudo crontab -l 2>/dev/null; echo "50 03 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
-# (sudo crontab -l 2>/dev/null; echo "50 07 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
-# (sudo crontab -l 2>/dev/null; echo "50 11 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
-# (sudo crontab -l 2>/dev/null; echo "50 15 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
-# (sudo crontab -l 2>/dev/null; echo "50 19 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
-# (sudo crontab -l 2>/dev/null; echo "50 23 * * * /home/$(whoami)/regular_maintenance.sh") | sudo crontab -
 
 # 서버 디렉토리 생성 및 설정파일 다운로드(Engine.ini 최적화, GameUserSettings.ini 서버저장 디렉토리 지정)
 mkdir -p /home/$(whoami)/palworld/Pal/Saved/Config/LinuxServer
