@@ -3,17 +3,23 @@
 CRON_FILE="/tmp/mycron"
 SCRIPT_PATH="/home/$(whoami)/regular_maintenance.sh"
 
+# regular_maintenance.sh 유무 확인
+if [ ! -f "$SCRIPT_PATH" ]; then
+    echo "regular_maintenance.sh이 없어서 다운로드중..."
+    curl -o "$SCRIPT_PATH" https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/regular_maintenance.sh
+    chmod +x "$SCRIPT_PATH"
+fi
+
 # 기존 크론 삭제
-clear
 crontab -r
 echo "기존 재시작 목록을 삭제했습니다."
 
 # 모드 선택
 while true; do
-    echo "팰월드서버 재시작 방법을 선택하세요:"
+    echo "팰월드서버 재시작 모드를 선택하세요:"
     echo "1. 하루 횟수만 지정 (자동 시간 계산)"
     echo "2. 하루 횟수와 시간 지정"
-    read -p "선택 (0 입력 시 등록하지 않고 종료): " MODE
+    read -p "선택 (0 입력 시 종료): " MODE
 
     if [[ "$MODE" == "0" ]]; then
         echo "스크립트를 종료합니다."
