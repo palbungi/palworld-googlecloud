@@ -44,6 +44,8 @@ rm pb
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh
 chmod +x /home/$(whoami)/timer.sh
 bash timer.sh
+sudo systemctl start cron
+sudo systemctl enable cron
 
 # 초보들을 위한 Portainer 접속 IP 안내
 clear
