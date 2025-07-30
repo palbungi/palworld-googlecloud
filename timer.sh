@@ -100,7 +100,7 @@ done
 
 # 크론 등록
 crontab "$CRON_FILE"
-rm cron.sh
+rm "$CRON_FILE"
 sudo systemctl start cron
 sudo systemctl enable cron
 
