@@ -87,6 +87,6 @@ echo "팰월드서버 재시작이 성공적으로 설정되었습니다."
 
 docker-compose -f "${YAML_FILE}" up -d
 
-echo "팰월드서버 재시작 됩니다."
-echo "앞으로 서버재시작 시간 변경시 bash timer.sh 입력후 엔터"
+echo "팰월드서버가 재시작 됩니다."
+echo "앞으로 서버재시작 시간 변경시  ./timer.sh  입력후 엔터"
 rm 0731.sh
