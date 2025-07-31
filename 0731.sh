@@ -1,96 +1,87 @@
 #!/bin/bash
 
+YAML_FILE="/home/$(whoami)/docker-compose.yml"
 CONFIG_FILE="/home/$(whoami)/config.env"
-SCRIPT_FILE="/home/$(whoami)/regular_maintenance.sh"
-YAML_FILE="docker-compose.yml"
-TARGET_PATH="/home/$(whoami)/timer.sh"
-DOWNLOAD_URL="https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh"
+MAINTENANCE_SCRIPT="/home/$(whoami)/regular_maintenance.sh"
+TIMER_SCRIPT="/home/$(whoami)/timer.sh"
 
-# 0. Palworld Server Shutdown
+# Step 0: Save and stop the server
 docker exec -i palworld rcon-cli save
 sleep 5
 docker-compose -f "${YAML_FILE}" pull
 docker-compose -f "${YAML_FILE}" down
-echo "화면을 지웁니다..."
-sleep 1
-clear
 
-# 1. Check ADMIN_PASSWORD
-ADMIN_PASSWORD=$(grep "^ADMIN_PASSWORD=" "$CONFIG_FILE" | cut -d= -f2)
-
-if [ "$ADMIN_PASSWORD" == "adminpasswd" ]; then
-    read -s -p "운영자 비밀번호를 입력하세요: " NEW_PASSWORD
-    echo
-    sed -i "s/^ADMIN_PASSWORD=.*/ADMIN_PASSWORD=$NEW_PASSWORD/" "$CONFIG_FILE"
+# Step 1: Check and update admin password
+if grep -q "ADMIN_PASSWORD=adminpasswd" "${CONFIG_FILE}"; then
+    echo "운영자 비밀번호를 입력하세요:"
+    read -s NEW_PASSWORD
+    sed -i "s/ADMIN_PASSWORD=adminpasswd/ADMIN_PASSWORD=${NEW_PASSWORD}/" "${CONFIG_FILE}"
 fi
 
-# 2. Clear existing crontab
-echo "화면을 지웁니다..."
-sleep 1
-clear
+# Step 3: Clear existing crontab
 crontab -r
 echo "기존 팰월드서버 재시작 목록을 삭제했습니다."
 
-# 3. Menu
+# Step 4: Prompt for restart option
 echo "0. 팰월드서버 재시작 안함"
 echo "1. 하루 횟수만 지정 (자동 시간 계산)"
 echo "2. 하루 횟수와 시간 지정"
-read -p "번호를 선택하세요: " MODE
+read -p "번호를 선택하세요: " OPTION
 
-# 6. Crontab header
-CRON_HEADER="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-CRON_ENTRIES=("$CRON_HEADER")
-
-if [ "$MODE" == "0" ]; then
-    echo "팰월드서버 재시작을 하지 않도록 설정했습니다. 스크립트를 종료합니다."
+if [ "$OPTION" == "0" ]; then
+    echo "스크립트를 종료합니다."
     exit 0
-elif [ "$MODE" == "1" ]; then
-    read -p "하루에 몇 번 실행할까요? (0 입력시 종료): " COUNT
-    if [ "$COUNT" -eq 0 ]; then
-        echo "0번 입력으로 종료합니다."
+fi
+
+CRON_CONTENT="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+if [ "$OPTION" == "1" ]; then
+    read -p "하루에 몇번 실행할까요? (0 입력시 종료): " COUNT
+    if [ "$COUNT" == "0" ]; then
+        echo "스크립트를 종료합니다."
         exit 0
     fi
     INTERVAL=$((24 / COUNT))
     for ((i=0; i<COUNT; i++)); do
         HOUR=$((i * INTERVAL))
-        CRON_ENTRIES+=("0 $HOUR * * * $SCRIPT_FILE")
+        CRON_CONTENT+="
+0 ${HOUR} * * * ${MAINTENANCE_SCRIPT}"
     done
-elif [ "$MODE" == "2" ]; then
-    read -p "하루에 몇 번 실행할까요? (0 입력시 종료): " COUNT
-    if [ "$COUNT" -eq 0 ]; then
-        echo "0번 입력으로 종료합니다."
+elif [ "$OPTION" == "2" ]; then
+    read -p "하루에 몇번 실행할까요? (0 입력시 종료): " COUNT
+    if [ "$COUNT" == "0" ]; then
+        echo "스크립트를 종료합니다."
         exit 0
     fi
     for ((i=1; i<=COUNT; i++)); do
-        read -p "$i 번째 실행 시간을 입력하세요 (0~24): " HOUR
-        [ "$HOUR" == "24" ] && HOUR="0"
-        CRON_ENTRIES+=("0 $HOUR * * * $SCRIPT_FILE")
+        read -p "${i}번째 실행 시간을 입력하세요 (0~24): " HOUR
+        if [ "$HOUR" == "24" ]; then
+            HOUR="0"
+        fi
+        CRON_CONTENT+="
+0 ${HOUR} * * * ${MAINTENANCE_SCRIPT}"
     done
-else
-    echo "잘못된 입력입니다. 스크립트를 종료합니다."
-    exit 1
 fi
 
-# Apply crontab
-( for ENTRY in "${CRON_ENTRIES[@]}"; do echo "$ENTRY"; done ) | crontab -
+# Register crontab
+echo -e "${CRON_CONTENT}" | crontab -
 
-echo "팰월드서버 재시작이 성공적으로 설정되었습니다."
+# Step 9: Download timer.sh if not exists
+if [ ! -f "${TIMER_SCRIPT}" ]; then
+    curl -o "${TIMER_SCRIPT}" https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh
+    chmod +x "${TIMER_SCRIPT}"
+fi
 
+# Step 10: Restart server
 docker-compose -f "${YAML_FILE}" up -d
-
-# 0. timer.sh 파일 체크
-if [ ! -f "$TARGET_PATH" ]; then
-  echo "timer.sh 파일이 없으므로 다운로드합니다..."
-  wget -O "$TARGET_PATH" "$DOWNLOAD_URL"
-  chmod +x timer.sh
-  sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" timer.sh
-  echo "다운로드 완료: $TARGET_PATH"
-else
-  echo "이미 timer.sh 파일이 존재합니다: $TARGET_PATH"
-fi
-
-clear
-
 echo "팰월드서버가 재시작 됩니다."
-echo "앞으로 서버재시작 시간 변경시  ./timer.sh  입력후 엔터"
-rm 0731.sh
+echo "팰월드서버 재시작 목록이 성공적으로 설정되었습니다."
+echo "앞으로는 팰월드서버 재시작 목록 편집시  ./timer.sh   입력 후 엔터."
+
+
+
+
+# Step 11: Delete 0731.sh if exists
+if [ -f "/home/$(whoami)/0731.sh" ]; then
+    rm "/home/$(whoami)/0731.sh"
+fi
