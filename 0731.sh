@@ -3,12 +3,11 @@
 CONFIG_FILE="/home/$(whoami)/config.env"
 SCRIPT_FILE="/home/$(whoami)/regular_maintenance.sh"
 YAML_FILE="docker-compose.yml"
-CONTAINER_NAME="palworld"
 TARGET_PATH="/home/$(whoami)/timer.sh"
 DOWNLOAD_URL="https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh"
 
 # 0. Palworld Server Shutdown
-docker exec -i $CONTAINER_NAME rcon-cli save
+docker exec -i palworld rcon-cli save
 sleep 5
 docker-compose -f "${YAML_FILE}" pull
 docker-compose -f "${YAML_FILE}" down
