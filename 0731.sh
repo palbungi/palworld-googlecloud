@@ -12,6 +12,7 @@ if [ ! -f "$TARGET_PATH" ]; then
   echo "timer.sh 파일이 없으므로 다운로드합니다..."
   wget -O "$TARGET_PATH" "$DOWNLOAD_URL"
   chmod +x timer.sh
+  sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" timer.sh
   echo "다운로드 완료: $TARGET_PATH"
 else
   echo "이미 timer.sh 파일이 존재합니다: $TARGET_PATH"
