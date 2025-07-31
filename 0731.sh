@@ -13,7 +13,7 @@ docker-compose -f "${YAML_FILE}" down
 
 # Step 1: Check and update admin password
 if grep -q "ADMIN_PASSWORD=adminpasswd" "${CONFIG_FILE}"; then
-    echo "운영자 비밀번호를 입력하세요:"
+    echo "운영자 비밀번호를 입력 후 엔터 눌러주세요."
     read -s NEW_PASSWORD
     sed -i "s/ADMIN_PASSWORD=adminpasswd/ADMIN_PASSWORD=${NEW_PASSWORD}/" "${CONFIG_FILE}"
 fi
