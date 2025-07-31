@@ -7,17 +7,6 @@ CONTAINER_NAME="palworld"
 TARGET_PATH="/home/$(whoami)/timer.sh"
 DOWNLOAD_URL="https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh"
 
-# 0. timer.sh 파일 체크
-if [ ! -f "$TARGET_PATH" ]; then
-  echo "timer.sh 파일이 없으므로 다운로드합니다..."
-  wget -O "$TARGET_PATH" "$DOWNLOAD_URL"
-  chmod +x timer.sh
-  sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" timer.sh
-  echo "다운로드 완료: $TARGET_PATH"
-else
-  echo "이미 timer.sh 파일이 존재합니다: $TARGET_PATH"
-fi
-
 # 0. Palworld Server Shutdown
 docker exec -i $CONTAINER_NAME rcon-cli save
 sleep 5
@@ -89,6 +78,19 @@ fi
 echo "팰월드서버 재시작이 성공적으로 설정되었습니다."
 
 docker-compose -f "${YAML_FILE}" up -d
+
+# 0. timer.sh 파일 체크
+if [ ! -f "$TARGET_PATH" ]; then
+  echo "timer.sh 파일이 없으므로 다운로드합니다..."
+  wget -O "$TARGET_PATH" "$DOWNLOAD_URL"
+  chmod +x timer.sh
+  sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" timer.sh
+  echo "다운로드 완료: $TARGET_PATH"
+else
+  echo "이미 timer.sh 파일이 존재합니다: $TARGET_PATH"
+fi
+
+clear
 
 echo "팰월드서버가 재시작 됩니다."
 echo "앞으로 서버재시작 시간 변경시  ./timer.sh  입력후 엔터"
