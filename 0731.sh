@@ -5,7 +5,7 @@ SCRIPT_FILE="/home/$(whoami)/regular_maintenance.sh"
 YAML_FILE="docker-compose.yml"
 CONTAINER_NAME="palworld"
 TARGET_PATH="/home/$(whoami)/timer.sh"
-DOWNLOAD_URL="https://raw.githubusercontent.com/palbungi/palworld-wine/refs/heads/main/timer.sh"
+DOWNLOAD_URL="https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh"
 
 # 0. timer.sh 파일 체크
 if [ ! -f "$TARGET_PATH" ]; then
