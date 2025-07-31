@@ -38,7 +38,7 @@ sed -i "s/^PUBLIC_IP=.*/PUBLIC_IP=$(curl -s ifconfig.me)/" default.env
 # 팰월드 서버 재시작 설정 스크립트 다운로드 및 실행
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh
 chmod +x timer.sh
-sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" 
+sed -i "s|/home/\$(whoami)/|/home/$(whoami)/|g" timer.sh
 echo "화면을 지웁니다..."
 sleep 1
 clear
