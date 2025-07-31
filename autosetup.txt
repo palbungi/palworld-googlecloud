@@ -33,6 +33,7 @@ mkdir -p /home/$(whoami)/palworld/Pal/Saved/SaveGames/0/0123456789ABCDEF01234567
 # 서버설정 수정
 nano config.env
 sed -i "s/^REGION=.*/REGION=$(curl -s ifconfig.me)/" default.env
+sed -i "s/^PUBLIC_IP=.*/PUBLIC_IP=$(curl -s ifconfig.me)/" default.env
 
 # 팰월드 서버 시작
 docker-compose -f /home/$(whoami)/docker-compose.yml up -d
