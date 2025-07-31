@@ -29,6 +29,9 @@ docker exec -i $CONTAINER_NAME rcon-cli save
 sleep 50
 docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_10_seconds"
 
+# 저장
+docker exec -i $CONTAINER_NAME rcon-cli save
+
 sleep 5
 
 docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_5_seconds"
