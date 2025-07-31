@@ -37,6 +37,9 @@ if [ "$ADMIN_PASSWORD" == "adminpasswd" ]; then
 fi
 
 # 2. Clear existing crontab
+echo "화면을 지웁니다..."
+sleep 1
+clear
 crontab -r
 echo "기존 팰월드서버 재시작 목록을 삭제했습니다."
 
