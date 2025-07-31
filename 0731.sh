@@ -10,7 +10,6 @@ docker exec -i $CONTAINER_NAME rcon-cli save
 sleep 5
 docker-compose -f "${YAML_FILE}" pull
 docker-compose -f "${YAML_FILE}" down
-docker-compose -f "${YAML_FILE}" up -d
 echo "화면을 지웁니다..."
 sleep 1
 clear
@@ -72,3 +71,7 @@ fi
 ( for ENTRY in "${CRON_ENTRIES[@]}"; do echo "$ENTRY"; done ) | crontab -
 
 echo "팰월드서버 재시작이 성공적으로 설정되었습니다."
+
+docker-compose -f "${YAML_FILE}" up -d
+
+echo "팰월드서버 재시작 됩니다."
