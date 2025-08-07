@@ -1,6 +1,6 @@
 # palworld dedicate server for linux
 
-팰붕이 구글클라우드 자동구축
+palworld dedicate server for linux
 
 1. 구글 클라우드 VPC네트워크 → 방화벽 → 방화벽 규칙 만들기
 https://console.cloud.google.com/net-security/firewall-manager/firewall-policies/add
