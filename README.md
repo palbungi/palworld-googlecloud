@@ -1,6 +1,8 @@
 # palworld dedicate server for linux
 
-palworld dedicate server for linux
+# 팰붕이들을 위한 팰월드 서버 열기
+
+## TIP: 구글클라우드는 가상카드(신한,국민,현대)로 거의 무한정 만들 수 있다
 
 1. 구글 클라우드 VPC네트워크 → 방화벽 → 방화벽 규칙 만들기
 https://console.cloud.google.com/net-security/firewall-manager/firewall-policies/add
