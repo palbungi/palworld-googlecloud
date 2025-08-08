@@ -146,7 +146,7 @@ set -euo pipefail
 clear
 echo -e "\n\033[1;35m================================================"
 echo "       PalWorld 서버 설치 완료!"
-echo "================================================\033[0m"
+echo "================================================"
 
 # 서버 접속 정보 추출
 SERVER_IP=$(curl -s ifconfig.me)
@@ -155,7 +155,7 @@ SERVER_PASSWORD=$(grep '^SERVER_PASSWORD=' "$USER_HOME/config.env" | cut -d '=' 
 # 게임 서버 접속 정보 출력
 echo -e "게임 서버 접속 정보:"
 echo -e "  아이피: ${SERVER_IP}:8211"
-echo -e "  비밀번호: \033[1;32m${SERVER_PASSWORD}\033[0m"
+echo -e "  비밀번호: ${SERVER_PASSWORD}\033[0m"
 
 # Portainer 접속 정보 출력
 echo -e "\n서버 관리 인터페이스:"
