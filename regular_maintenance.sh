@@ -1,66 +1,75 @@
 #!/usr/bin/bash
 
+# 설정 변수
 YAML_FILE="docker-compose.yml"
 CONTAINER_NAME="palworld"
+BROADCAST_CMD="rcon-cli \"Broadcast"
+SAVE_CMD="rcon-cli save"
+RESTART_MSG="Server_will_restart_in"
+SHUTDOWN_MSG="Server_is_shutting_down_for_maintance"
 
-# 10분
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_10_minutes"
+# 브로드캐스트 함수
+broadcast() {
+    local message="$1"
+    docker exec -i "$CONTAINER_NAME" rcon-cli "Broadcast $message"
+}
 
-# 5분
-sleep 300
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_5_minutes"
+# 카운트다운 알림 함수
+countdown() {
+    local time_left="$1"
+    broadcast "${RESTART_MSG}_${time_left}"
+}
 
-# 3분
-sleep 120
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_3_minutes"
+# 서버 저장
+save_server() {
+    docker exec -i "$CONTAINER_NAME" $SAVE_CMD
+}
 
-# 2분
-sleep 60
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_2_minutes"
+# 재시작 절차 시작
+echo "서버 재시작 절차를 시작합니다..."
 
-# 1분
-sleep 60
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_60_seconds"
+# 10분 전 알림
+countdown "10_minutes"
+sleep 300  # 5분 대기
 
-# 저장
-docker exec -i $CONTAINER_NAME rcon-cli save
+# 5분 전 알림
+countdown "5_minutes"
+sleep 120  # 2분 대기
 
-# 10초
-sleep 50
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_10_seconds"
+# 3분 전 알림
+countdown "3_minutes"
+sleep 60   # 1분 대기
 
-# 저장
-docker exec -i $CONTAINER_NAME rcon-cli save
+# 2분 전 알림
+countdown "2_minutes"
+sleep 60   # 1분 대기
 
-sleep 5
+# 1분 전 알림
+countdown "60_seconds"
+save_server
+sleep 50   # 50초 대기
 
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_5_seconds"
+# 10초 전 알림
+countdown "10_seconds"
+save_server
+sleep 5    # 5초 대기
 
-sleep 1
+# 초 단위 카운트다운
+for i in {5..1}; do
+    countdown "${i}_seconds"
+    sleep 1
+done
 
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_4_seconds"
+# 서버 종료 알림
+broadcast "$SHUTDOWN_MSG"
 
-sleep 1
-
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_3_seconds"
-
-sleep 1
-
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_2_seconds"
-
-sleep 1
-
-docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_1_seconds"
-
-sleep 1
-
-# 서버 종료
-docker exec -i $CONTAINER_NAME rcon-cli "Broadcast Server_is_shutting_down_for_maintance"
-
-# 5초 대기
+# 최종 대기
 sleep 5
 
 # 서버 재시작
-docker-compose -f "${YAML_FILE}" pull
-docker-compose -f "${YAML_FILE}" down
-docker-compose -f "${YAML_FILE}" up -d
+echo "서버 재시작 중..."
+docker-compose -f "$YAML_FILE" pull
+docker-compose -f "$YAML_FILE" down
+docker-compose -f "$YAML_FILE" up -d
+
+echo "서버 재시작 완료!"
