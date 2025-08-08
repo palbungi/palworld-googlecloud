@@ -40,8 +40,8 @@ mkdir -p /home/$(whoami)/palworld/Pal/Saved/SaveGames/0/0123456789ABCDEF01234567
 
 # 서버설정 수정
 nano config.env
-sed -i "s/^REGION=.*/REGION=$(curl -s ifconfig.me)/" default.env
-sed -i "s/^PUBLIC_IP=.*/PUBLIC_IP=$(curl -s ifconfig.me)/" default.env
+sed -i "s/^REGION=.*/REGION=$(curl -s ifconfig.me)/" config.env
+sed -i "s/^PUBLIC_IP=.*/PUBLIC_IP=$(curl -s ifconfig.me)/" config.env
 
 # 팰월드 서버 재시작 설정 스크립트 다운로드 및 실행
 wget https://raw.githubusercontent.com/palbungi/palworld-googlecloud/refs/heads/main/timer.sh
