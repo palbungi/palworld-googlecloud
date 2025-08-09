@@ -1,5 +1,5 @@
 # 서버 종료
-YAML_FILE="/home/bykim_bim/docker-compose.yml"
+YAML_FILE="/home/$(whoami)/docker-compose.yml"
 CONTAINER_NAME="palworld"
 docker exec -i $CONTAINER_NAME rcon-cli save
 docker exec -i ${CONTAINER_NAME} rcon-cli "Broadcast Server_will_restart_in_5_seconds"
