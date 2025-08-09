@@ -65,7 +65,9 @@ register_cron_and_display() {
             COLOR="${GREEN}"
         fi
         
-        echo -e "${COLOR}${AMPM} ${DISPLAY_HOUR}시 ${MIN}분${NC}"
+        # 한 자리 시간일 경우 앞에 0 추가 (오전 03시 형식)
+        printf -v DISPLAY_HOUR_FORMATTED "%02d" "$DISPLAY_HOUR"
+        echo -e "${COLOR}${AMPM} ${DISPLAY_HOUR_FORMATTED}시 ${MIN}분${NC}"
     done
 }
 
