@@ -23,8 +23,7 @@ https://console.cloud.google.com/compute/instances
 8. 왼쪽에 OS 및 스토리지 클릭, 변경 클릭 운영체제 아랫쪽에 Ubuntu 선택, 버전 
 
 9. SSH 연결 클릭 후 아래 명령어 복사&붙여넣기 엔터
-
-```wget -O pb https://sundang.mooo.com/gci && bash pb```
+## wget -O pb https://sundang.mooo.com/gci && bash pb
 
 11. 자동으로 서버구동에 필요한 파일 다운로드 및 도커와 도커컴포즈 설치, 서버 자동점검 스크립트등이 세팅될것임
 
